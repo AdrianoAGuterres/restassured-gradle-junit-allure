@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.8.1'
+}
+
+group 'in.reqres'
+version '1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+allure {
+    autoconfigure = true
+    version = '2.8.1'
+    useJUnit4() {
+        version = '2.8.1'
+    }
+
+    reportDir = file(projectDir.toString()+'/report/')
+    resultsDir = file(projectDir.toString()+'/resultsTests/')
+
+    Properties environment = new Properties()
+    environment.put("java.version", System.properties.get("java.version"))
+    environment.put("os.name", System.properties.get("os.name"))
+    environment.put("os.version", System.properties.get("os.version"))
+    environment.put("os.arch", System.properties.get("os.arch"))
+
+    if (!resultsDir.exists()){
+        mkdir(resultsDir)
+    }
+
+    environment.store(new FileWriter(resultsDir.toString()+"/environment.properties"),"")
+    environment.clear()
+}
+
+dependencies {
+    implementation('com.googlecode.json-simple:json-simple:1.1.1')
+    implementation("io.rest-assured:rest-assured:4.3.3")
+    implementation('io.codearte.jfairy:jfairy:0.5.9')
+    implementation('junit:junit:4.13.2')
+}
