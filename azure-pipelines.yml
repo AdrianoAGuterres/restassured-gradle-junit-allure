@@ -15,5 +15,16 @@ steps:
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
+- task: Gradle@2
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'teste'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    testRunTitle: 'teste'
+    codeCoverageToolOption: 'Cobertura'
+    codeCoverageClassFilesDirectories: 'build/classes/main/'
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: false
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
